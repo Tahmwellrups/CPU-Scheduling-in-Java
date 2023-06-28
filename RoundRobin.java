@@ -5,6 +5,7 @@ public class RoundRobin {
     public static void main(String[] args) {
         // Create a queue of processes
         Queue<Process> queue = new LinkedList<>();
+        // create a queue for display table
 
         // Add processes to the queue (name, arrivalTime, burstTime)
         queue.add(new Process("P1", 0, 24));
@@ -20,6 +21,8 @@ public class RoundRobin {
 
     public static void roundRobinScheduling(Queue<Process> queue, int timeQuantum) {
         int currentTime = 0;
+        Queue<Process> list = new LinkedList<>();
+
 
         while (!queue.isEmpty()) {
             Process currentProcess = queue.poll();
@@ -36,6 +39,9 @@ public class RoundRobin {
                 System.out.println("Finish Time: " + currentProcess.getFinishTime());
                 System.out.println("Turnaround Time: " + currentProcess.getTurnaroundTime());
                 System.out.println("Waiting Time: " + currentProcess.getWaitingTime());
+
+                list.add(currentProcess);
+
             } else {
                 // Process needs more time to complete
                 currentTime += timeQuantum;
@@ -43,5 +49,20 @@ public class RoundRobin {
                 queue.add(currentProcess);
             }
         }
+
+        System.out.println("\nProcess\tArrival Time\tBurst Time\tEnd Time\tTurnaround Time\tWating Time");
+
+        for (Process a : list) {
+
+            System.out.println(
+                    a.getName() + "\t\t" +
+                    a.getArrivalTime() + "\t\t\t\t" +
+                    a.getBurstTime() + "\t\t\t" +
+                    a.getFinishTime() + "\t\t\t" +
+                    a.getTurnaroundTime() + "\t\t\t\t" +
+                    a.getWaitingTime()
+            );
+        }
+
     }
 }
