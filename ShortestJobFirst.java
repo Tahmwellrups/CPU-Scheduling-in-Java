@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 class Process implements Comparable<Process> {
     int id;
@@ -11,33 +12,63 @@ class Process implements Comparable<Process> {
         this.burstTime = burstTime;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public int getBurstTime() {
+        return burstTime;
+    }
     @Override
     public int compareTo(Process other) {
+
+        if (this.arrivalTime == 0 && other.arrivalTime != 0) {
+            return -1; // Current process has arrival time of 0, so it should come before the other process
+        } else if (this.arrivalTime != 0 && other.arrivalTime == 0) {
+            return 1; // Other process has arrival time of 0, so it should come before the current process
+        } else if (this.arrivalTime == other.arrivalTime) {
+            return this.burstTime - other.burstTime;
+        }
         return this.burstTime - other.burstTime;
     }
 
     @Override
     public String toString() {
-        return "Process " + id + ": Burst Time = " + burstTime;
+        return "Process " + id + ": Arrival Time = " + arrivalTime + " Burst Time = " + burstTime;
     }
 }
 
 public class ShortestJobFirst {
     public static void main(String[] args) {
-        // Example processes
-        Process[] processes = {
-                new Process(1, 0, 6),
-                new Process(2, 1, 8),
-                new Process(3, 2, 7),
-                new Process(4, 3, 3)
-        };
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of processes: ");
+        int n = scanner.nextInt();
+
+        Process[] processes = new Process[n];
+
+        // Input the processes
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details for Process " + (i + 1) + ":");
+            System.out.print("Arrival Time: ");
+            int arrivalTime = scanner.nextInt();
+            System.out.print("Burst Time: ");
+            int burstTime = scanner.nextInt();
+            processes[i] = new Process(i + 1, arrivalTime, burstTime);
+        }
 
         // Sort the processes by burst time (shortest first)
         Arrays.sort(processes);
 
-        int n = processes.length;
         int[] completionTime = new int[n];
+        int[] turnaroundTime = new int[n];
         int[] waitingTime = new int[n];
+        int totalBurstTime = 0;
+        int totalTurnAroundTime = 0;
         int totalWaitingTime = 0;
 
         // Calculate completion time for each process
@@ -46,19 +77,41 @@ public class ShortestJobFirst {
             completionTime[i] = completionTime[i - 1] + processes[i].burstTime;
         }
 
+        // Calculate turnaround time for each process
+        for (int i = 0; i < n; i++) {
+            turnaroundTime[i] = completionTime[i] - processes[i].arrivalTime;
+            totalTurnAroundTime += turnaroundTime[i];
+        }
+
         // Calculate waiting time for each process
         for (int i = 0; i < n; i++) {
             waitingTime[i] = completionTime[i] - processes[i].arrivalTime - processes[i].burstTime;
             totalWaitingTime += waitingTime[i];
         }
 
-        // Display the processes and their waiting times
+        // Display the processes and their end, turnaround, and waiting times
+        System.out.println("\nProcess \t\t Arrival Time \t\t Burst Time \t\t End Time \t\t Turnaround Time \t\t Waiting Time");
         for (int i = 0; i < n; i++) {
-            System.out.println(processes[i] + "  Waiting Time = " + waitingTime[i]);
+            System.out.println(processes[i].getId() + "\t\t\t\t\t" + processes[i].getArrivalTime() +"\t\t\t\t\t" + processes[i].getBurstTime() + "\t\t\t\t\t" + completionTime[i] + "\t\t\t\t\t" + turnaroundTime[i] + "\t\t\t\t\t" + waitingTime[i]);
         }
+
+        // Calculate and display cpu utilization
+        for (int i = 0; i < n; i++){
+            totalBurstTime += processes[i].burstTime;
+        }
+
+        double cpuUtilization = (double) totalBurstTime/completionTime[n - 1] * 100;
+        System.out.println("\nCPU Utilization: " + cpuUtilization + "%");
+
+
+        // Calculate and display average turnaround time
+        double averageTurnAroundTime = (double) totalTurnAroundTime / n;
+        System.out.println("Average Turnaround Time: " + averageTurnAroundTime);
 
         // Calculate and display average waiting time
         double averageWaitingTime = (double) totalWaitingTime / n;
         System.out.println("Average Waiting Time: " + averageWaitingTime);
+
+        scanner.close();
     }
 }
