@@ -38,6 +38,8 @@ class PreemptivePriority {
         List<Process> readyQueue = new ArrayList<>();
         List<Process> completedProcesses = new ArrayList<>();
 
+        System.out.println("\n\nExecution Order:");
+
         while (!processes.isEmpty() || !readyQueue.isEmpty()) {
             // This will move the processes from the list to the ready queue if they have arrived
             while (!processes.isEmpty() && processes.get(0).arrivalTime <= currentTime) {
@@ -63,6 +65,7 @@ class PreemptivePriority {
             }
 
             currentProcess.burstTime--;
+            System.out.print(currentProcess.name + " "); // Print the name of the process being executed
             currentTime++;
 
             // Check if the current process has finished
@@ -74,12 +77,12 @@ class PreemptivePriority {
         }
 
         // Calculate and display the response time, waiting time, and turnaround time for each process
-        System.out.println("\n\nProcess\t\tPriority\tArrival Time\tBurst Time\tStart Time\tEnd Time\tWaiting Time\tTurnaround Time");
+        System.out.println("\n\nProcess\t\tPriority\tBurst Time\tStart Time\tEnd Time\tWaiting Time\tTurnaround Time");
         for (int i = 0; i < completedProcesses.size(); i++) {
             Process process = completedProcesses.get(i);
             int waitingTime = process.startTime - process.arrivalTime;
             int turnaroundTime = process.endTime - process.arrivalTime;
-            System.out.println(process.name + "\t\t\t" + process.priority + "\t\t\t" + process.arrivalTime + "\t\t\t\ta" + burstTimes.get(i) + "\t\t\t" +
+            System.out.println(process.name + "\t\t\t" + process.priority + "\t\t\t" + burstTimes.get(i) + "\t\t\t" +
                     process.startTime + "\t\t\t" + process.endTime + "\t\t\t" + waitingTime
                     + "\t\t\t\t" + turnaroundTime);
         }
