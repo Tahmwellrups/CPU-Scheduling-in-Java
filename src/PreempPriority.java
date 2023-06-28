@@ -71,84 +71,16 @@ class PreemptivePriority{
         }
 
         // Calculate and display the response time, waiting time, and turnaround time for each process
-        System.out.println("Process\tStart Time\tEnd Time\tResponse Time\tWaiting Time\tTurnaround Time");
-        for (Process process : completedProcesses) {
+        System.out.println("\n\nProcess\tPriority\tBurst Time\tStart Time\tEnd Time\tResponse Time\tWaiting Time\tTurnaround Time");
+        for (Process process : completedProcesses)
+        {
             int responseTime = process.startTime - process.arrivalTime;
             int waitingTime = responseTime;
             int turnaroundTime = process.endTime - process.arrivalTime;
-            System.out.println(process.name + "\t" + process.startTime + "\t" + process.endTime + "\t" + responseTime + "\t\t" + waitingTime + "\t\t" + turnaroundTime);
+            System.out.println(process.name + "\t\t" + process.priority + "\t\t" + process.burstTime + "\t\t" + process.startTime + "\t\t\t" + process.endTime + "\t\t\t" + responseTime + "\t\t\t" + waitingTime + "\t\t\t" + turnaroundTime);
         }
     }
 }
 
-/*
-import java.util.*;
 
-class Process {
-    String name;
-    int arrivalTime;
-    int burstTime;
-    int priority;
 
-    public Process(String name, int arrivalTime, int burstTime, int priority) {
-        this.name = name;
-        this.arrivalTime = arrivalTime;
-        this.burstTime = burstTime;
-        this.priority = priority;
-    }
-}
-
-class PreemptivePriority{
-    public static void preemptivePriority(LinkedList<Data> data){
-        List<Process> processes = new ArrayList<>();
-
-        // Add processes to the list
-        for(Data proc : data)
-        {
-            processes.add(new Process(proc.name, proc.at, proc.bt, proc.pt));
-        }
-
-        // Sort the processes based on arrival time (if needed)
-        processes.sort(Comparator.comparingInt(p -> p.arrivalTime));
-
-        int currentTime = 0;
-        List<Process> readyQueue = new ArrayList<>();
-        List<Process> completedProcesses = new ArrayList<>();
-
-        while (!processes.isEmpty() || !readyQueue.isEmpty()) {
-            // Move processes from the list to the ready queue if they have arrived
-            while (!processes.isEmpty() && processes.get(0).arrivalTime <= currentTime) {
-                readyQueue.add(processes.remove(0));
-            }
-
-            if (readyQueue.isEmpty()) {
-                currentTime++;
-                continue;
-            }
-
-            // Find the process with the highest priority in the ready queue
-            Process currentProcess = readyQueue.get(0);
-            for (Process process : readyQueue) {
-                if (process.priority < currentProcess.priority) {
-                    currentProcess = process;
-                }
-            }
-
-            // Execute the current process for 1 unit of time
-            currentProcess.burstTime--;
-            currentTime++;
-
-            // Check if the current process has finished executing
-            if (currentProcess.burstTime == 0) {
-                completedProcesses.add(currentProcess);
-                readyQueue.remove(currentProcess);
-            }
-        }
-
-        // Display the completion order of processes
-        System.out.println("Completion Order:");
-        for (Process process : completedProcesses) {
-            System.out.print(process.name + " ");
-        }
-    }
-}*/
