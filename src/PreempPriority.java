@@ -21,11 +21,13 @@ class Process {
 class PreemptivePriority{
     public static void preemptivePriority(LinkedList<Data> data){
         List<Process> processes = new ArrayList<>();
+        int[] burstTimes = new int[data.size()];
 
-        // Add processes to the list
-        for(Data proc : data)
-        {
+        // Add processes to the list and store burst times in the array
+        for (int i = 0; i < data.size(); i++) {
+            Data proc = data.get(i);
             processes.add(new Process(proc.name, proc.at, proc.bt, proc.pt));
+            burstTimes[i] = proc.bt;
         }
 
         // Sort the processes based on arrival time (if needed)
@@ -71,16 +73,15 @@ class PreemptivePriority{
         }
 
         // Calculate and display the response time, waiting time, and turnaround time for each process
-        System.out.println("\n\nProcess\tPriority\tBurst Time\tStart Time\tEnd Time\tResponse Time\tWaiting Time\tTurnaround Time");
+        System.out.println("\n\nProcess\t\tPriority\tBurst Time\tStart Time\tEnd Time\tWaiting Time\tTurnaround Time");
         for (Process process : completedProcesses)
         {
-            int responseTime = process.startTime - process.arrivalTime;
-            int waitingTime = responseTime;
+
+            int waitingTime = process.startTime - process.arrivalTime;
             int turnaroundTime = process.endTime - process.arrivalTime;
-            System.out.println(process.name + "\t\t" + process.priority + "\t\t" + process.burstTime + "\t\t" + process.startTime + "\t\t\t" + process.endTime + "\t\t\t" + responseTime + "\t\t\t" + waitingTime + "\t\t\t" + turnaroundTime);
+            System.out.println(process.name + "\t\t\t" + process.priority + "\t\t\t" + burstTimes[data.indexOf()] + "\t\t\t" +
+                    process.startTime + "\t\t\t" + process.endTime + "\t\t\t" + waitingTime
+                    + "\t\t\t\t" + turnaroundTime);
         }
     }
 }
-
-
-
