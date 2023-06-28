@@ -48,6 +48,7 @@ public class ShortestJobFirst {
 
         System.out.print("Enter the number of processes: ");
         int n = scanner.nextInt();
+        int processesCompleted = 0;
 
         Process[] processes = new Process[n];
 
@@ -59,6 +60,8 @@ public class ShortestJobFirst {
             System.out.print("Burst Time: ");
             int burstTime = scanner.nextInt();
             processes[i] = new Process(i + 1, arrivalTime, burstTime);
+            processesCompleted++;
+            System.out.println("Process " + processes[i].id + " completed.");
         }
 
         // Sort the processes by burst time (shortest first)
@@ -93,6 +96,7 @@ public class ShortestJobFirst {
         System.out.println("\nProcess \t\t Arrival Time \t\t Burst Time \t\t End Time \t\t Turnaround Time \t\t Waiting Time");
         for (int i = 0; i < n; i++) {
             System.out.println(processes[i].getId() + "\t\t\t\t\t" + processes[i].getArrivalTime() +"\t\t\t\t\t" + processes[i].getBurstTime() + "\t\t\t\t\t" + completionTime[i] + "\t\t\t\t\t" + turnaroundTime[i] + "\t\t\t\t\t" + waitingTime[i]);
+            //Tracker to keep track when a process is completed
         }
 
         // Calculate and display cpu utilization
@@ -111,6 +115,13 @@ public class ShortestJobFirst {
         // Calculate and display average waiting time
         double averageWaitingTime = (double) totalWaitingTime / n;
         System.out.println("Average Waiting Time: " + averageWaitingTime);
+
+        // Display the number of completed processes
+        System.out.println("Total Completed Processes: " + processesCompleted);
+
+        // Calculate and display throughput
+        double throughput = (double) n / completionTime[n - 1];
+        System.out.println("Throughput: " + throughput + " processes per time unit");
 
         scanner.close();
     }
