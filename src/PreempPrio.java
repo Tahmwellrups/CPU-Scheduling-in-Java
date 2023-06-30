@@ -21,7 +21,6 @@ public class PreempPrio
     PreempPrio()
     {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Preemptive Priority Scheduling");
         System.out.print("Number of processes: ");
         int processNum = scan.nextInt();
         for(int i = 0; i < processNum; i++)
