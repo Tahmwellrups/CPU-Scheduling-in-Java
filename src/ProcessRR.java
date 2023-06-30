@@ -1,7 +1,7 @@
 class ProcessRR {
-    private String name;
-    private int arrivalTime;
-    private int burstTime;
+    private final String name;
+    private final int arrivalTime;
+    private final int burstTime;
     private int remainingTime;
     private int finishTime;
     private int turnaroundTime;
