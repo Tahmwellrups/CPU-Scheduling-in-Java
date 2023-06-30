@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -85,14 +86,15 @@ public class RoundRobin {
 
 
         // prints CPU Utilization
+        DecimalFormat df = new DecimalFormat("0.00");
         cpuUtil = (currentTime / totalExecutionTime) * 100;
-        System.out.println("\nCPU Utilization: " + cpuUtil + "%");
-        // prints average wating time
-        System.out.println("Average Waiting Time: " + ((double)aveWating / list.size()));
+        System.out.println("\nCPU Utilization: " + df.format(cpuUtil) + "%");
+        // prints average waiting time
+        System.out.println("Average Waiting Time: " + df.format((double)aveWating / list.size()));
         // Prints average turnaround time
-        System.out.println("Average Turnaround Time: " + ((double)aveTurnaround / list.size()));
+        System.out.println("Average Turnaround Time: " + df.format((double)aveTurnaround / list.size()));
         // Prints the System Throughput
         systemTroughput = (double) (list.get(list.size() - 1).getFinishTime()) / list.size();
-        System.out.println("System Throughput: " + systemTroughput);
+        System.out.println("System Throughput: " + df.format(systemTroughput));
     }
 }
