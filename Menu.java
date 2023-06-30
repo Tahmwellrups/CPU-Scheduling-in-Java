@@ -13,13 +13,11 @@ public class Menu extends JFrame{
 
         switch(choice)
         {
-            case 1: RoundRobin(); break;
-            case 2: ShortestJobFirst(); break;
-            case 3: PreempPriority(); break;
+            case 1: new RoundRobin(); break;
+            case 2: new ShortestJobFirst(); break;
+            case 3: new PreempPrio(); break;
             default: System.out.println("Invalid choice"); new Menu();
         }
-
-
 
     }
     public static void main (String [] args){ new Menu(); }
