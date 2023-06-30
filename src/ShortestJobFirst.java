@@ -43,7 +43,7 @@ class Process implements Comparable<Process> {
 }
 
 public class ShortestJobFirst {
-    public static void main(String[] args) {
+    ShortestJobFirst() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the number of processes: ");

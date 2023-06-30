@@ -15,10 +15,10 @@ class Data
         this.pt = pt;
     }
 }
-public class ProcessData
+public class PreempPrio
 {
     public LinkedList<Data> data = new LinkedList<>();
-    ProcessData()
+    PreempPrio()
     {
         Scanner scan = new Scanner(System.in);
         System.out.println("Preemptive Priority Scheduling");
@@ -41,7 +41,7 @@ public class ProcessData
     }
     public static void main(String []args)
     {
-        new ProcessData();
+        new PreempPrio();
     }
 
 }

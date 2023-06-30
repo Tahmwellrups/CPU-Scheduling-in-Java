@@ -1,7 +1,7 @@
 import java.text.DecimalFormat;
 import java.util.*;
 
-class Process {
+class ProcessPP {
     String name;
     int arrivalTime;
     int burstTime;
@@ -9,7 +9,7 @@ class Process {
     int startTime;
     int endTime;
 
-    public Process(String name, int arrivalTime, int burstTime, int priority) {
+    public ProcessPP(String name, int arrivalTime, int burstTime, int priority) {
         this.name = name;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
@@ -21,13 +21,18 @@ class Process {
 
 class PreemptivePriority {
     public static void preemptivePriority(LinkedList<Data> data) {
-        List<Process> processes = new ArrayList<>();
+        List<ProcessPP> processes = new ArrayList<>();
         List<Integer> burstTimes = new ArrayList<>();
+        //Functions for the execution of the priority scheduling
+        int currentTime = 0;
+        double executionTotal = 0;
+        List<ProcessPP> readyQueue = new ArrayList<>();
+        List<ProcessPP> completedProcesses = new ArrayList<>();
 
         // Add processes to the list and store burst times in each process
         for (Data proc : data)
         {
-            Process process = new Process(proc.name, proc.at, proc.bt, proc.pt);
+            ProcessPP process = new ProcessPP(proc.name, proc.at, proc.bt, proc.pt);
             process.burstTime = proc.bt; // Store the burst time directly in the Process object
             processes.add(process);
             burstTimes.add(proc.bt); // Store the burst time in the burstTimes list
@@ -35,17 +40,11 @@ class PreemptivePriority {
 
         // Sort the processes based on arrival time (if needed)
         processes.sort(Comparator.comparingInt(p -> p.arrivalTime));
-
-        //Functions for the execution of the priority scheduling
-        int currentTime = 0;
-        double executionTotal = 0;
-        List<Process> readyQueue = new ArrayList<>();
-        List<Process> completedProcesses = new ArrayList<>();
-
+        
         System.out.println("\n\nExecution Order:");
 
         while (!processes.isEmpty() || !readyQueue.isEmpty()) {
-            System.out.println("Current Time: " + currentTime);
+            System.out.println("Current Time: " + currentTime); //Shows the current time for checking
             // This will move the processes from the list to the ready queue if they have arrived
             while (!processes.isEmpty() && processes.get(0).arrivalTime <= currentTime) {
                 readyQueue.add(processes.remove(0));
@@ -59,8 +58,8 @@ class PreemptivePriority {
             }
 
             // Find the process with the highest priority in the ready queue
-            Process currentProcess = readyQueue.get(0);
-            for (Process process : readyQueue) {
+            ProcessPP currentProcess = readyQueue.get(0);
+            for (ProcessPP process : readyQueue) {
                 if (process.priority < currentProcess.priority) {
                     currentProcess = process;
                 }
@@ -94,7 +93,7 @@ class PreemptivePriority {
         System.out.println("\n\nProcess\t\tPriority\tBurst Time\tStart Time\tEnd Time\tWaiting Time\tTurnaround Time");
         for (int i = 0; i < completedProcesses.size(); i++)
         {
-            Process process = completedProcesses.get(i);
+            ProcessPP process = completedProcesses.get(i);
             int waitingTime = process.startTime - process.arrivalTime;
             int turnaroundTime = process.endTime - process.arrivalTime;
             aveWaiting += waitingTime;

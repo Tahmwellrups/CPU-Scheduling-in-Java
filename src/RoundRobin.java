@@ -3,11 +3,11 @@ import java.util.Queue;
 import java.util.Scanner;
 
 public class RoundRobin {
-    public static void main(String[] args) {
+    RoundRobin() {
         Scanner scan = new Scanner(System.in);
 
         // Create a queue of processes
-        Queue<Process> queue = new LinkedList<>();
+        Queue<ProcessRR> queue = new LinkedList<>();
 
         System.out.print("Number of Process: ");
         int numProcess = scan.nextInt();
@@ -19,7 +19,7 @@ public class RoundRobin {
             System.out.print("Enter burstTime for " + name + ": ");
             int bursTime = scan.nextInt();
 
-            queue.add(new Process(name, arrivalTime, bursTime));
+            queue.add(new ProcessRR(name, arrivalTime, bursTime));
         }
 
         // Set time quantum for Round Robin
@@ -30,13 +30,13 @@ public class RoundRobin {
         roundRobinScheduling(queue, timeQuantum);
     }
 
-    public static void roundRobinScheduling(Queue<Process> queue, int timeQuantum) {
+    public static void roundRobinScheduling(Queue<ProcessRR> queue, int timeQuantum) {
         int currentTime = 0, totalExecutionTime = 0;
-        LinkedList<Process> list = new LinkedList<>();
+        LinkedList<ProcessRR> list = new LinkedList<>();
 
 
         while (!queue.isEmpty()) {
-            Process currentProcess = queue.poll();
+            ProcessRR currentProcess = queue.poll();
             System.out.println("Executing process: " + currentProcess.getName());
 
             if (currentProcess.getRemainingTime() <= timeQuantum) {
@@ -67,7 +67,7 @@ public class RoundRobin {
         int aveTurnaround = 0, aveWating = 0, cpuUtil;
         double systemTroughput;
 
-        for (Process a : list) {
+        for (ProcessRR a : list) {
 
             aveWating += a.getWaitingTime();
             aveTurnaround += a.getTurnaroundTime();

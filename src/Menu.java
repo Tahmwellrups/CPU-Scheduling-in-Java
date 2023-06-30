@@ -13,9 +13,9 @@ public class Menu extends JFrame{
 
         switch(choice)
         {
-            case 1: //RRS(); break;
-            case 2: //SJFS(); break;
-            case 3: //PRS(); break;
+            case 1: new RoundRobin(); break;
+            case 2: new ShortestJobFirst(); break;
+            case 3: new PreempPrio(); break;
             default: System.out.println("Invalid choice"); new Menu();
         }
 

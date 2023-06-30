@@ -1,4 +1,4 @@
-class Process {
+class ProcessRR {
     private String name;
     private int arrivalTime;
     private int burstTime;
@@ -7,7 +7,7 @@ class Process {
     private int turnaroundTime;
     private int waitingTime;
 
-    public Process(String name, int arrivalTime, int burstTime) {
+    public ProcessRR(String name, int arrivalTime, int burstTime) {
         this.name = name;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
