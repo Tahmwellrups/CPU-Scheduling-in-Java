@@ -39,10 +39,6 @@ public class PreempPrio
         PreemptivePriority.preemptivePriority(data);
 
     }
-    public static void main(String []args)
-    {
-        new PreempPrio();
-    }
 
 }
 
