@@ -22,13 +22,9 @@ public class RoundRobin {
             queue.add(new Process(name, arrivalTime, bursTime));
         }
 
-        /*// Add processes to the queue (name, arrivalTime, burstTime)
-        queue.add(new Process("P1", 0, 24));
-        queue.add(new Process("P2", 1, 3));
-        queue.add(new Process("P3", 2, 3));*/
-
         // Set time quantum for Round Robin
-        int timeQuantum = 6;
+        System.out.print("Time Quantum: ");
+        int timeQuantum = scan.nextInt();
 
         // Perform Round Robin scheduling
         roundRobinScheduling(queue, timeQuantum);
