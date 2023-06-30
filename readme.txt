@@ -1,3 +1,5 @@
+GROUP MEMBERS AND TASKS
+
 Leader: Tupas, Ramwell P. - Implementation of Preemptive Priority Scheduling in Java class
 Members:
 Arellano, Micko James D. - Main menu design and documentation for the project (word, presentation, etc.)
