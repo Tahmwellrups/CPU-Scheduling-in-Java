@@ -18,7 +18,6 @@ public class Menu extends JFrame{
             case 3: new PreempPrio(); break;
             default: System.out.println("Invalid choice"); new Menu();
         }
-
     }
     public static void main (String [] args){ new Menu(); }
 
