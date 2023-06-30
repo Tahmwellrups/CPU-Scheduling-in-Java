@@ -28,15 +28,15 @@ public class RoundRobin {
         queue.add(new Process("P3", 2, 3));*/
 
         // Set time quantum for Round Robin
-        int timeQuantum = 4;
+        int timeQuantum = 6;
 
         // Perform Round Robin scheduling
         roundRobinScheduling(queue, timeQuantum);
     }
 
     public static void roundRobinScheduling(Queue<Process> queue, int timeQuantum) {
-        int currentTime = 0;
-        Queue<Process> list = new LinkedList<>();
+        int currentTime = 0, totalExecutionTime = 0;
+        LinkedList<Process> list = new LinkedList<>();
 
 
         while (!queue.isEmpty()) {
@@ -62,12 +62,20 @@ public class RoundRobin {
                 currentTime += timeQuantum;
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeQuantum);
                 queue.add(currentProcess);
+                totalExecutionTime += timeQuantum;
             }
         }
 
         System.out.println("\nProcess\tArrival Time\tBurst Time\tEnd Time\tTurnaround Time\tWating Time");
 
+        int aveTurnaround = 0, aveWating = 0, cpuUtil;
+        double systemTroughput;
+
         for (Process a : list) {
+
+            aveWating += a.getWaitingTime();
+            aveTurnaround += a.getTurnaroundTime();
+
 
             System.out.println(
                     a.getName() + "\t\t" +
@@ -79,5 +87,16 @@ public class RoundRobin {
             );
         }
 
+
+        // prints CPU Utilization
+        cpuUtil = (currentTime / totalExecutionTime) * 100;
+        System.out.println("\nCPU Utilization: " + cpuUtil + "%");
+        // prints average wating time
+        System.out.println("Average Waiting Time: " + ((double)aveWating / list.size()));
+        // Prints average turnaround time
+        System.out.println("Average Turnaround Time: " + ((double)aveTurnaround / list.size()));
+        // Prints the System Throughput
+        systemTroughput = (double) (list.get(list.size() - 1).getFinishTime()) / list.size();
+        System.out.println("System Throughput: " + systemTroughput);
     }
 }
